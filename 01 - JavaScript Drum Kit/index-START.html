@@ -58,6 +58,11 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  const keyDivElements = document.getElementsByClassName('key');
+  for (let i = 0; i < keyDivElements.length; i++) {
+    const keyCode = keyDivElements[i].getAttribute('data-key');
+    keyDivElements[i].onClick()
+  }
 
 </script>
 
