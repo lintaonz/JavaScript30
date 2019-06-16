@@ -96,6 +96,46 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  function findLastCheckedItem(checkBoxes, selectedCheckBox) {
+    let result;
+    checkBoxes.forEach(function(currentValue, currentIndex) {
+        if (currentValue.id != selectedCheckBox.id && currentValue.checked) {
+          result = currentValue;          
+        }
+    });
+    return result;
+  };
+
+  function selectShiftElements(checkBoxes, srcElement, targetElement) {
+    const srcId = Number.parseInt(srcElement.id);
+    const targetId = Number.parseInt(targetElement.id);
+
+    const startId = targetId > srcId ? srcId : targetId;
+    const endId = targetId > srcId ? targetId: srcId;
+
+    // console.log(`startId: ${startId}  endId: ${endId}`);
+    checkBoxes.forEach(function(currentValue, currentIndex) {
+        if (currentIndex >= startId && currentIndex <= endId) {
+          currentValue.checked = true;          
+        }
+    });
+  }
+
+  function checkboxOnChange(e){
+    if (e.target.checked && e.shiftKey) {
+      const targetElement = findLastCheckedItem(checkboxes, e.target);
+      if (targetElement) {
+        selectShiftElements(checkboxes, e.target, targetElement);
+      }
+    }
+  }
+
+  checkboxes.forEach(function(currentValue, currentIndex, listObj) {
+    currentValue.id = `${currentIndex}`;
+    currentValue.addEventListener('click', checkboxOnChange);
+  });
 </script>
 </body>
 </html>
